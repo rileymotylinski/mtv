@@ -1,0 +1,70 @@
+{% extends "bootstrap.html" %}
+
+{% block content %}
+<button onclick="reload()">play new video</button>
+<button onclick="Max_volume">post button</button>
+<button onclick="Max_volume()">Max Volume</button>
+
+<img id="poster" style="position:absolute; transform: translateX(1200px) translateY(125px) rotate(12deg); height: 400px; width: auto;" src="static/photos/winona.png">
+
+<div><img id="tv" style="height: 1000px; width: auto; transform: translateY(250px)" src="static/photos/drawntv.png"></div>
+
+<div id="transition_screen" class="center_screen"></div>
+<div class="center_screen">
+    <video class="center_screen" id="video" width="800" height="600" autoplay muted>
+      <source src="/video_feed/{{ video_name }}" type="video/webm">
+      <source src="/video_feed/{{ video_name }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  
+    
+</div>
+
+
+<script>
+  let video = document.getElementById("video");
+
+
+
+  // Changes volume
+  function Max_volume() {
+    if (video.muted == true){
+      video.muted = !video.muted;
+    }
+    video.volume = 1;
+  } 
+
+  function reload() {
+    location.reload()
+  }
+
+  // updates page when video ends
+  video.addEventListener("ended", function(){
+    // event listener for last x seconds of video, where x is duration of animation
+    // future issue, for now the fade out is fairly convincing
+    video = document.getElementById("video")
+    video.classList.add("transition_anim")
+
+    const animated = document.querySelector('.transition_anim');
+
+    animated.addEventListener('animationend', () => {
+      $.ajax({
+        url : "/new_music_video",
+        type : "get",
+        success : function(data) {
+          video.classList.remove("transition_anim")          
+          video.setAttribute("src", "/video_feed/" + data["video"]).then(video.play());
+            }
+        });
+      });
+    });
+    
+
+  video.addEventListener("ended", function(){
+    
+    
+  });
+</script>
+
+{% endblock %}
+

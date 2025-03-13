@@ -1,0 +1,37 @@
+body {
+    background-image: url("photos/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#transition_screen {
+    background-color: black;
+    opacity:100;
+    height: 600px;
+    width: 800px;
+}
+
+.transition_anim {
+    animation-name: fade_out;
+    animation-duration: 1.25s;
+    animation-timing-function: ease-in-out;
+}
+
+.center_screen {
+    transform: translate(-50%, -50%); 
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+}
+
+
+@keyframes fade_out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+
