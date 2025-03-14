@@ -1,6 +1,6 @@
 __pycache__
 static/videos
-.venv/
+venv/
 .env
 camera.py
 cocaktoo.jpg
